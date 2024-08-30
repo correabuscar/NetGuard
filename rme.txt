@@ -1,0 +1,9 @@
+this has my mods on a different branch: git branch
+
+the keystore AND key passwords are a minimum of 6 chars pwd each!
+
+the file: keystore.properties can be just this(exactly):
+storeFile=storeFilePath
+storePassword=
+keyAlias=
+keyPassword=
