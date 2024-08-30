@@ -7,3 +7,25 @@ storeFile=storeFilePath
 storePassword=
 keyAlias=
 keyPassword=
+
+
+How to BUILD:
+
+Build->Clean Project
+Build->Refresh Linked C++ Projects (just to be sure)
+Build->Rebuild Project
+
+then
+
+Build->Generate Signed ... APK
+choose APK from the two, `Next`,
+point to keystorepathfile.jks as the Key Store path
+use min 6 char passwords for both `key store password` and for `key password`
+the key alias is same "key0"
+`Next`
+pick "debug" of the 3, `Create`
+
+then:
+adb push ./app/debug/NetGuard-v2.329-debug.apk /storage/emulated/0/Download
+adb kill-server
+
