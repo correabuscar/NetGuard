@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <predefined>
     <wifi
-        blocked="false"
+        blocked="true"
         package="root" />
     <other
-        blocked="false"
+        blocked="true"
         package="root"
         roaming="false" />
 
@@ -17,40 +17,40 @@
         roaming="false" />
 
     <wifi
-        blocked="false"
+        blocked="true"
         package="com.google.android.apps.adm" />
     <other
-        blocked="false"
+        blocked="true"
         package="com.google.android.apps.adm"
         roaming="false" />
 
     <wifi
-        blocked="false"
+        blocked="true"
         package="com.google.android.backuptransport" />
     <other
-        blocked="false"
+        blocked="true"
         package="com.google.android.backuptransport" />
 
     <wifi
-        blocked="false"
+        blocked="true"
         package="com.google.android.gms" />
     <other
-        blocked="false"
+        blocked="true"
         package="com.google.android.gms" />
 
     <wifi
-        blocked="false"
+        blocked="true"
         package="com.google.android.apps.gcs" />
     <other
-        blocked="false"
+        blocked="true"
         package="com.google.android.apps.gcs"
         roaming="false" />
 
     <wifi
-        blocked="false"
+        blocked="true"
         package="com.samsung.android.fmm" />
     <other
-        blocked="false"
+        blocked="true"
         package="com.samsung.android.fmm" />
 
     <relation
