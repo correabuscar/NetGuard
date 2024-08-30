@@ -1,0 +1,1 @@
+cache the rcode 3 DNS responses, even those we made rcode 3 ourselves! so far only normal replies are cached! and add the default TTL from the UI to the cached values.
