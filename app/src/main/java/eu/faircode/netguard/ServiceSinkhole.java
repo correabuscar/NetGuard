@@ -2065,7 +2065,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                             else {
                                 filtered = true;
                                 packet.allowed = !rule.isBlocked();
-                                Log.i(TAG, "Filtering " + packet +
+                                Log.i(TAG, (packet.allowed?"Allowing":"Blocking")+" " + packet +
                                         " allowed=" + packet.allowed + " rule " + rule);
                             }
                         }
