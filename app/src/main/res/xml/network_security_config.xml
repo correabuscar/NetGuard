@@ -2,7 +2,9 @@
 <network-security-config xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="InsecureBaseConfiguration,AcceptsUserCertificates">
     <!-- https://developer.android.com/training/articles/security-config -->
-    <base-config cleartextTrafficPermitted="true">
+    <base-config cleartextTrafficPermitted="false">
+        <!-- ^ has no apparent effect, eg. firefox through firewall, can still see example.org on http port 80, if allowed in firewall!
+        unsure if it's meant for outside of NG only? untested. -->
         <trust-anchors>
             <certificates src="system" />
             <certificates src="user" />
