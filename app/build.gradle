@@ -105,6 +105,14 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
-}
+// this does show a lot of reds, and it's not needed since nothing I can do about it:
+//tasks.withType(JavaCompile).configureEach {
+//    options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+//}
+// uncomment it ^ only if you want to expand this:
+//> Task :app:compileDebugJavaWithJavac
+//Note: [1] Wrote GeneratedAppGlideModule with: []
+//Note: Some input files use or override a deprecated API.
+//Note: Recompile with -Xlint:deprecation for details.
+//Note: Some input files use unchecked or unsafe operations.
+//Note: Recompile with -Xlint:unchecked for details.
