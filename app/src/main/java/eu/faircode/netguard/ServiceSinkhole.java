@@ -1525,7 +1525,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
 
         if (log || log_app || filter) {
             int prio = Integer.parseInt(prefs.getString("loglevel", Integer.toString(Log.WARN)));
-            final int rcode = Integer.parseInt(prefs.getString("rcode", "3"));
+            final int rcode = Integer.parseInt(prefs.getString("rcode", "3")); //here's NXDOMAIN gotten from in-app settings
             if (prefs.getBoolean("socks5_enabled", false))
                 jni_socks5(
                         prefs.getString("socks5_addr", ""),
@@ -1543,7 +1543,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                     @Override
                     public void run() {
                         Log.i(TAG, "Running tunnel context=" + jni_context);
-                        jni_run(jni_context, vpn.getFd(), mapForward.containsKey(53), rcode);
+                        jni_run(jni_context, vpn.getFd(), mapForward.containsKey(53), rcode); // here's NXDOMAIN used
                         Log.i(TAG, "Tunnel exited");
                         tunnelThread = null;
                     }

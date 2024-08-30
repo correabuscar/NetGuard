@@ -17,6 +17,7 @@
     Copyright 2015-2024 by Marcel Bokhorst (M66B)
 */
 
+#include <assert.h>
 #include "netguard.h"
 
 int32_t get_qname(const uint8_t *data, const size_t datalen, uint16_t off, char *qname) {
@@ -121,6 +122,7 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
         }
 
         short svcb = 0;
+        short block_this = 0;
         int32_t aoff = off;
         for (int a = 0; a < acount; a++) {
             off = get_qname(data, *datalen, (uint16_t) off, name);
@@ -137,21 +139,36 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
 
                         char rd[INET6_ADDRSTRLEN + 1];
                         if (qtype == DNS_QTYPE_A) {
-                            if (off + sizeof(__be32) <= *datalen)
-                                inet_ntop(AF_INET, data + off, rd, sizeof(rd));
-                            else
-                                return;
+                            assert(4 == sizeof(struct in_addr));
+                            if (memcmp(data + off, "\x00\x00\x00\x00", sizeof(struct in_addr)) == 0) {
+                                log_android(ANDROID_LOG_WARN,
+                                            "Received IP address 0.0.0.0 for qname %s thus treating as rcode 3 aka NXDOMAIN", name);
+                                block_this=1;
+                            }
+                            if (! block_this) {
+                                if (off + sizeof(__be32) <= *datalen)
+                                    inet_ntop(AF_INET, data + off, rd, sizeof(rd));
+                                else
+                                    return;
+                            }
                         } else if (qclass == DNS_QCLASS_IN && qtype == DNS_QTYPE_AAAA) {
                             if (off + sizeof(struct in6_addr) <= *datalen)
                                 inet_ntop(AF_INET6, data + off, rd, sizeof(rd));
                             else
                                 return;
+                            // ignore ipv6 aka AAAA DNS replies! hmm, does this mean OS still receives it? unclear!
+                            log_android(ANDROID_LOG_DEBUG,
+                                        "DNS response AAAA(ipv6) ignored! answer: %d qname: %s off: %d rdlength: %d datalen: %d rd: %s",
+                                        a, name, off, rdlength, *datalen, rd);
+                            block_this=1;
+                            //return; //commented out because unsure if this ignores it but the OS still gets it or wut! instead, using block_this=1!
                         }
-
-                        dns_resolved(args, qname, name, rd, ttl, -1);
-                        log_android(ANDROID_LOG_DEBUG,
-                                    "DNS answer %d qname %s qtype %d ttl %d data %s",
-                                    a, name, qtype, ttl, rd);
+                        if (! block_this) {
+                            dns_resolved(args, qname, name, rd, ttl, -1);
+                            log_android(ANDROID_LOG_DEBUG,
+                                        "DNS answer %d qname %s qtype %d ttl %d data %s",
+                                        a, name, qtype, ttl, rd);
+                        }
                     } else if (qclass == DNS_QCLASS_IN &&
                                (qtype == DNS_SVCB || qtype == DNS_HTTPS)) {
                         // https://tools.ietf.org/id/draft-ietf-dnsop-svcb-https-01.html
@@ -178,7 +195,7 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
         }
 
         if (qcount > 0 &&
-            (svcb || is_domain_blocked(args, qname))) {
+            (block_this || svcb || is_domain_blocked(args, qname))) {
             dns->qr = 1;
             dns->aa = 0;
             dns->tc = 0;
@@ -187,7 +204,7 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
             dns->z = 0;
             dns->ad = 0;
             dns->cd = 0;
-            dns->rcode = (uint16_t) args->rcode;
+            dns->rcode = (uint16_t) args->rcode; // so is this 3 aka NXDOMAIN here but can be set to diff. value in NG's UI !
             dns->ans_count = 0;
             dns->auth_count = 0;
             dns->add_count = 0;
