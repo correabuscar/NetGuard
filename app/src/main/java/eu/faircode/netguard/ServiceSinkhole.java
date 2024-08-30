@@ -2292,13 +2292,17 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
 
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ServiceSinkhole.this);
                 String host = prefs.getString("validate", "www.google.com");
-                Log.i(TAG, "Validating " + network + " " + ni + " host=" + host);
+                Log.i(TAG, "Validating " + network + " " + ni + " not by using host=" + host + " but by using some numeric IP of some nextdns host");
 
                 Socket socket = null;
                 try {
                     socket = network.getSocketFactory().createSocket();
-                    socket.connect(new InetSocketAddress(host, 443), 10000);
-                    Log.i(TAG, "Validated " + network + " " + ni + " host=" + host);
+                    //socket.connect(new InetSocketAddress(host, 443), 10000);
+                    byte addrb[]={(byte) 194,71, (byte) 130, (byte) 182}; //it's one of the two ipv4 IPs of dns.nextdns.io which cnames to PING steering.nextdns.io (194.71.130.182) 56(84) bytes of data.
+                    InetAddress addr=InetAddress.getByAddress(addrb);
+                    Log.i(TAG, "Validating2 " + network + " " + ni + " ip="+addr.getAddress());
+                    socket.connect(new InetSocketAddress(addr,443),10000);
+                    Log.i(TAG, "Validated " + network + " " + ni + " via IP=" + addr);//host=" + host);
                     synchronized (validated) {
                         validated.put(network, new Date().getTime());
                     }
