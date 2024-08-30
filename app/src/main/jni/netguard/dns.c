@@ -204,7 +204,7 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
             dns->z = 0;
             dns->ad = 0;
             dns->cd = 0;
-            dns->rcode = (uint16_t) args->rcode; // so is this 3 aka NXDOMAIN here but can be set to diff. value in NG's UI !
+            dns->rcode = (uint16_t) args->rcode; // so this is 3 aka NXDOMAIN here but can be set to diff. value in NG's UI !
             dns->ans_count = 0;
             dns->auth_count = 0;
             dns->add_count = 0;
