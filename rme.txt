@@ -29,3 +29,10 @@ then:
 adb push ./app/debug/NetGuard-v2.329-debug.apk /storage/emulated/0/Download
 adb kill-server
 
+after installing it via package manager or package installer, to keep xiaomi from not killing it, you've to do 4 things:
+1. while started press the square button on bottom left to see all tabs(so to speak) and add/tap the lock so it's kept open, or something.
+2. hold tap on it while on (1) above, and tap the round settings, go to "Battery saver" set it to "No restriction" of the 4 variants.
+3. find "Background autostart" in settings (or via Activity Launcher app aka de.szalkowski.activitylauncher) and find NetGuard there set it to enabled, so it can start on startup (this makes xiaomi less likely to kill it)
+4. open the "Battery optimization" activity (probably via Hidden Settings app aka com.cyhan.sets, because this shortcut is hidden) and find NetGuard there, tap it, you see 2 things "Optimize" and "Don't optimize", make sure it's set to "Don't..." - WARNING tho, this resets to "Optimize" every time you turn off then on again the button in NetGuard, probably because com.miui.powerkeeper is marking it as such, instead of marking com.android.updater as such because that's the evil one that uses all the battery and you've to keep stopping it manually else it uses 350+mA constantly (instead of the 150mA that it does when true idle at 10% cpu usage constantly).
+5. make sure NetGuard is in Auto Close app's Whitelist so it doesn't get killed by Auto Close.
+
