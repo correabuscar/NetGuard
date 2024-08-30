@@ -445,15 +445,15 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                         Log.e(TAG, "Unknown command=" + cmd);
                 }
 
-                if (cmd == Command.start || cmd == Command.reload) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        boolean filter = prefs.getBoolean("filter", false);
-                        if (filter && isLockdownEnabled())
-                            showLockdownNotification();
-                        else
-                            removeLockdownNotification();
-                    }
-                }
+                //if (cmd == Command.start || cmd == Command.reload) {
+                //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                //        boolean filter = prefs.getBoolean("filter", false);
+                //        if (filter && isLockdownEnabled())
+                //            showLockdownNotification();
+                //        else
+                //            removeLockdownNotification();
+                //    }
+                //}
 
                 if (cmd == Command.start || cmd == Command.reload || cmd == Command.stop) {
                     // Update main view
