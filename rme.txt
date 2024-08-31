@@ -37,5 +37,6 @@ after installing it via package manager or package installer, to keep xiaomi fro
 5. make sure NetGuard is in Auto Close app's Whitelist so it doesn't get killed by Auto Close.
 6. add NetGuard to app lock so you're prompted for pwd when accessing it, in android settings search for 'app lock' then enable the toggle for NetGuard
 7. after turning on NetGuard, go into android settings for VPN and turn on both option for Always On VPN and for Block connections without VPN (seems to work fine with android 13 or so)
+8. make sure the internet/wifi network is set to have the two DNS IPs to say 127.0.0.10 and 127.0.0.20 so that it cannot DNS resolve (or leak). And thus ensure the DNS in NetGuard is set in Setting->Advanced->VPN DNS (the two there)
 
 
