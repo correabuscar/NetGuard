@@ -1783,18 +1783,18 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                             if (!exists || !mapUidIPFilters.get(key).get(iname).isBlocked()) {
                                 IPRule rule = new IPRule(key, name + "/" + iname, block, time, ttl);
                                 mapUidIPFilters.get(key).put(iname, rule);
-                                if (exists)
-                                    Log.w(TAG, "Address conflict " + key + " " + daddr + "/" + dresource);
+                                //if (exists)
+                                //    Log.w(TAG, "Address conflict " + key + " " + daddr + "/" + dresource);
                             } else if (exists) {
                                 mapUidIPFilters.get(key).get(iname).updateExpires(time, ttl);
-                                if (dname != null && ttl > 60 * 1000L)
-                                    Log.w(TAG, "Address updated " + key + " " + daddr + "/" + dresource);
+                                //if (dname != null && ttl > 60 * 1000L)
+                                //    Log.w(TAG, "Address updated " + key + " " + daddr + "/" + dresource);
                             } else {
                                 if (dname != null)
                                     Log.i(TAG, "Ignored " + key + " " + daddr + "/" + dresource + "=" + block);
                             }
-                        } else
-                            Log.w(TAG, "Address not numeric " + name);
+                        } //else
+                          //  Log.w(TAG, "Address not numeric " + name);
                     } catch (UnknownHostException ex) {
                         Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
                     }
@@ -1971,7 +1971,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
     // Called from native code
     private void dnsResolved(ResourceRecord rr) {
         if (DatabaseHelper.getInstance(ServiceSinkhole.this).insertDns(rr)) {
-            Log.i(TAG, "New IP " + rr);
+            //Log.i(TAG, "New IP " + rr);
             prepareUidIPFilters(rr.QName);
         }
         if (rr.uid > 0 && !TextUtils.isEmpty(rr.AName)) {
@@ -2011,9 +2011,9 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
         InetSocketAddress local = new InetSocketAddress(saddr, sport);
         InetSocketAddress remote = new InetSocketAddress(daddr, dport);
 
-        Log.i(TAG, "Get uid local=" + local + " remote=" + remote);
+        //Log.i(TAG, "Get uid local=" + local + " remote=" + remote);
         int uid = cm.getConnectionOwnerUid(protocol, local, remote);
-        Log.i(TAG, "Get uid=" + uid);
+        //Log.i(TAG, "Get uid=" + uid);
         return uid;
     }
 
@@ -2076,8 +2076,8 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                 if (!filtered)
                     if (mapUidAllowed.containsKey(packet.uid))
                         packet.allowed = mapUidAllowed.get(packet.uid);
-                    else
-                        Log.w(TAG, "No rules for " + packet);
+                    //else
+                    //    Log.w(TAG, "No rules for " + packet);
             }
         }
 
