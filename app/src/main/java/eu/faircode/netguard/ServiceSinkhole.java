@@ -2037,11 +2037,11 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                 // Allow unfiltered UDP
                 packet.allowed = true;
                 Log.i(TAG, "Allowing UDP " + packet);
-            } else if (packet.uid < 2000 &&
-                    !last_connected && isSupported(packet.protocol) && false) {
-                // Allow system applications in disconnected state
-                packet.allowed = true;
-                Log.w(TAG, "Allowing disconnected system " + packet);
+//            } else if (packet.uid < 2000 &&
+//                    !last_connected && isSupported(packet.protocol) && false) {
+//                // Allow system applications in disconnected state
+//                packet.allowed = true;
+//                Log.w(TAG, "Allowing disconnected system " + packet);
 //            } else if ((packet.uid < 2000 || BuildConfig.PLAY_STORE_RELEASE) &&
 //                    !mapUidKnown.containsKey(packet.uid) && isSupported(packet.protocol)) {
 //                // Allow unknown (system) traffic
