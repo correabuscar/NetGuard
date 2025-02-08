@@ -22,7 +22,7 @@
 extern FILE *pcap_file;
 
 int get_udp_timeout(const struct udp_session *u, int sessions, int maxsessions) {
-    int timeout = (ntohs(u->dest) == 53 ? UDP_TIMEOUT_53 : UDP_TIMEOUT_ANY);
+    int timeout = (ntohs(u->dest) == DNS_UDP_PORT_NUMBER ? UDP_TIMEOUT_53 : UDP_TIMEOUT_ANY);
 
     int scale = 100 - sessions * 100 / maxsessions;
     timeout = timeout * scale / 100;
@@ -130,7 +130,7 @@ void check_udp_socket(const struct arguments *args, const struct epoll_event *ev
                 s->udp.received += bytes;
 
                 // Process DNS response
-                if (ntohs(s->udp.dest) == 53)
+                if (ntohs(s->udp.dest) == DNS_UDP_PORT_NUMBER)
                     parse_dns_response(args, s, buffer, (size_t *) &bytes);
 
                 // Forward to tun
@@ -138,7 +138,7 @@ void check_udp_socket(const struct arguments *args, const struct epoll_event *ev
                     s->udp.state = UDP_FINISHING;
                 else {
                     // Prevent too many open files
-                    if (ntohs(s->udp.dest) == 53)
+                    if (ntohs(s->udp.dest) == DNS_UDP_PORT_NUMBER)
                         s->udp.state = UDP_FINISHING;
                 }
             }
@@ -154,8 +154,8 @@ int has_udp_session(const struct arguments *args, const uint8_t *pkt, const uint
     const struct ip6_hdr *ip6 = (struct ip6_hdr *) pkt;
     const struct udphdr *udphdr = (struct udphdr *) payload;
 
-    if (ntohs(udphdr->dest) == 53 && !args->fwd53)
-        return 1;
+    if (ntohs(udphdr->dest) == DNS_UDP_PORT_NUMBER && !args->fwd53)
+        return 1; // so here if it is udp port 53 and it is not forwarded!
 
     // Search session
     struct ng_session *cur = args->ctx->ng_session;

@@ -115,6 +115,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ServiceSinkhole extends VpnService implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = "NetGuard.Service";
+    public static final int DNS_UDP_PORT_NUMBER = 3538/*was 53*/; //XXX: keep this value in sync with DNS_UDP_PORT_NUMBER from netguard.h file!
 
     private boolean registeredUser = false;
     private boolean registeredIdleState = false;
@@ -824,7 +825,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
 
             // Application log
             if (log_app && packet.uid >= 0 &&
-                    !(packet.uid == 0 && (packet.protocol == 6 || packet.protocol == 17) && packet.dport == 53)) {
+                    !(packet.uid == 0 && (packet.protocol == 6 || packet.protocol == 17) && packet.dport == DNS_UDP_PORT_NUMBER)) {
                 if (!(packet.protocol == 6 /* TCP */ || packet.protocol == 17 /* UDP */))
                     packet.dport = 0;
                 if (dh.updateAccess(packet, dname, -1)) {
@@ -837,7 +838,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
         }
 
         private void usage(Usage usage) {
-            if (usage.Uid >= 0 && !(usage.Uid == 0 && usage.Protocol == 17 && usage.DPort == 53)) {
+            if (usage.Uid >= 0 && !(usage.Uid == 0 && usage.Protocol == 17 && usage.DPort == DNS_UDP_PORT_NUMBER)) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ServiceSinkhole.this);
                 boolean filter = prefs.getBoolean("filter", false);
                 boolean log_app = prefs.getBoolean("log_app", false);
@@ -1543,7 +1544,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                     @Override
                     public void run() {
                         Log.i(TAG, "Running tunnel context=" + jni_context);
-                        jni_run(jni_context, vpn.getFd(), mapForward.containsKey(53), rcode); // here's NXDOMAIN used
+                        jni_run(jni_context, vpn.getFd(), mapForward.containsKey(DNS_UDP_PORT_NUMBER)/*bool for is port 53 forwarded?!*/, rcode); // here's NXDOMAIN used
                         Log.i(TAG, "Tunnel exited");
                         tunnelThread = null;
                     }

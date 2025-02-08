@@ -598,7 +598,7 @@ void check_tcp_socket(const struct arguments *args,
                         s->tcp.received += bytes;
 
                         // Process DNS response
-                        if (ntohs(s->tcp.dest) == 53 && bytes > 2) {
+                        if (ntohs(s->tcp.dest) == DNS_TCP_PORT_NUMBER && bytes > 2) { //tcp port 53, i'd disable this but I don't wanna mess things up here.
                             ssize_t dlen = bytes - 2;
                             parse_dns_response(args, s, buffer + 2, (size_t *) &dlen);
                         }

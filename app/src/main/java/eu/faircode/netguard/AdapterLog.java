@@ -378,7 +378,11 @@ public class AdapterLog extends CursorAdapter {
             case 995:
                 return "pop3s";
             default:
-                return Integer.toString(port);
+                if (ServiceSinkhole.DNS_UDP_PORT_NUMBER == port) {
+                    return "dnspDf";//personalDNSfilter
+                } else {
+                    return Integer.toString(port);
+                }
         }
     }
 }

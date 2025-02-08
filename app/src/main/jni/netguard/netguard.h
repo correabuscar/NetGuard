@@ -44,6 +44,10 @@
 
 #define TUN_YIELD 10 // packets
 
+//XXX: keep this value (ie. 53) in sync with DNS_UDP_PORT_NUMBER from .java files(only 1 file atm)!
+#define DNS_UDP_PORT_NUMBER 3538/*was 53*/ // udp port 53 is used to access target dns server, XXX: keep in sync with the one from ServiceSinkhole.java with same name!
+#define DNS_TCP_PORT_NUMBER 53 // TCP port 53 is used i don't know when but I don't care, maybe SOCKS5? I don't want to allow access to 53 via TCP anyway.
+
 #define ICMP4_MAXMSG (IP_MAXPACKET - 20 - 8) // bytes (socket)
 #define ICMP6_MAXMSG (IPV6_MAXPACKET - 40 - 8) // bytes (socket)
 #define UDP4_MAXMSG (IP_MAXPACKET - 20 - 8) // bytes (socket)
