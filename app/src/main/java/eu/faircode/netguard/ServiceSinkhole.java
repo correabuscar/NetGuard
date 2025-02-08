@@ -115,7 +115,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ServiceSinkhole extends VpnService implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = "NetGuard.Service";
-    public static final int DNS_UDP_PORT_NUMBER = 3538/*was 53*/; //XXX: keep this value in sync with DNS_UDP_PORT_NUMBER from netguard.h file!
+    public static final int DNS_UDP_PORT_NUMBER = 53; //3538/*was 53*/; //XXX: keep this value in sync with DNS_UDP_PORT_NUMBER from netguard.h file!
 
     private boolean registeredUser = false;
     private boolean registeredIdleState = false;
