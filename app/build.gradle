@@ -9,11 +9,14 @@ android {
 
     defaultConfig {
         applicationId = "eu.faircode.netguard"
-        versionName = "2.332"
+        //XXX: use high version number to prevent google play store from overwriting it with an update from the store!
+        versionName = "9.332"
         minSdkVersion 22
         targetSdkVersion 34
         //noinspection HighAppVersionCode
-        versionCode = 2024122801
+        versionCode = 2147483000 //max is 2,147,483,647 and over wraps around to negative which will fail to compile!
+        //XXX: ^ use high version number to prevent google play store from overwriting it with an update from the store!
+        //versionCode = 2024122801
         archivesBaseName = "NetGuard-v$versionName"
 
         externalNativeBuild {
