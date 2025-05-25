@@ -10,6 +10,7 @@
 /tools/config.sh
 /app/.externalNativeBuild
 /app/release
+/app/debug/
 /app/play
 keystore.properties
 crowdin.properties
