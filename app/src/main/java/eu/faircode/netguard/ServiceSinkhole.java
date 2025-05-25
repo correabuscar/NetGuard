@@ -3268,7 +3268,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                 String daddr = cursor.getString(colDAddr);
                 if (Util.isNumericAddress(daddr))
                     try {
-                        daddr = InetAddress.getByName(daddr).getHostName();
+                        daddr = InetAddress.getByName(daddr).getHostName(); //XXX: this will DNS-lookup the hostname, ie. NG will do a DNS query of its own bypassing the VPN, so outside of the VPN!
                     } catch (UnknownHostException ignored) {
                     }
                 sb.append(daddr);
