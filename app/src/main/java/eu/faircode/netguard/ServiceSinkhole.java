@@ -2294,7 +2294,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
 
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ServiceSinkhole.this);
                 String host = prefs.getString("validate", "www.google.com");
-                Log.i(TAG, "Validating " + network + " " + ni + " not by using host=" + host + " but by using some numeric IP of some nextdns host");
+                Log.i(TAG, "Validating " + network + " " + ni + " not by using host=" + host + " but by using some numeric IP of some nextdns host and simply TCP connecting to its 443 port, no TLS/SSL/https tho.");
 
                 Socket socket = null;
                 try {
