@@ -3266,11 +3266,13 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                 sb.append(df.format(cursor.getLong(colTime))).append(' ');
 
                 String daddr = cursor.getString(colDAddr);
-                if (Util.isNumericAddress(daddr))
-                    try {
-                        daddr = InetAddress.getByName(daddr).getHostName(); //XXX: this will DNS-lookup the hostname, ie. NG will do a DNS query of its own bypassing the VPN, so outside of the VPN!
-                    } catch (UnknownHostException ignored) {
-                    }
+                // TODO: make this .getHostName() DNS request go through the port forwarded(if any) that's been set by the user, until then let's not do any DNS lookups to avoid resource exhaustion in case router's dropping all request packets
+                // TODO: actually maybe use here the same IP to host database(?) or way that it's used when looking at any specific app in NG's list (which does show the hosts properly, even when UDP 53 is port forwarded)
+//                if (Util.isNumericAddress(daddr))
+//                    try {
+//                        daddr = InetAddress.getByName(daddr).getHostName(); //XXX: this will DNS-lookup the hostname, ie. NG will do a DNS query of its own bypassing the VPN, so outside of the VPN!
+//                    } catch (UnknownHostException ignored) {
+//                    }
                 sb.append(daddr);
 
                 int allowed = cursor.getInt(colAllowed);

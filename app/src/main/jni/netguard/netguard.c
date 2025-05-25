@@ -381,7 +381,8 @@ Java_eu_faircode_netguard_Util_is_1numeric_1address(JNIEnv *env, jclass type, js
     hints.ai_family = AF_UNSPEC;
     hints.ai_flags = AI_NUMERICHOST;
     struct addrinfo *result;
-    int err = getaddrinfo(ip, NULL, &hints, &result);
+    int err = getaddrinfo(ip, NULL, &hints, &result);//XXX: or wait, maybe i'm wrong due to AI_NUMERICHOST; //this causes NetGuard to do a DNS query (outside the VPN, so using system's DNS servers, like those set in NG's settings or if none, those set in wifi's settings, I guess.) if it's a hostname, so you might get: 05-27 13:09:10.467 D/NetGuard.JNI( 4675): getaddrinfo(dns.nextdns.io) error 8: hostname nor servname provided, or not known
+
     if (err)
         log_android(ANDROID_LOG_DEBUG, "getaddrinfo(%s) error %d: %s", ip, err, gai_strerror(err));
     else
