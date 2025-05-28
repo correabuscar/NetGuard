@@ -143,11 +143,15 @@ public class AdapterAccess extends CursorAdapter {
 
                 @Override
                 protected String doInBackground(String... args) {
-                    try {
-                        return InetAddress.getByName(args[0]).getHostName();//XXX: NG doing dns lookup here bypassing VPN, so port 53 directly!
-                    } catch (UnknownHostException ignored) {
+//                    try {
+//                        return InetAddress.getByName(args[0]).getHostName();//XXX: NG doing dns lookup here bypassing VPN, so port 53 directly!
+//                    } catch (UnknownHostException ignored) {
+                    if (null == args[0]) {
+                            return "127.0.0.1";//emulates getByName's behavior
+                    } else {
                         return args[0];
                     }
+//                    }
                 }
 
                 @Override
